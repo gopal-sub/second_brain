@@ -1,7 +1,15 @@
-import { Schema, model } from 'mongoose'
+import { Schema, model, Types } from 'mongoose'
 
-
-const BrainSchema = new Schema({
+export interface Ibrain {
+    text: string,
+    title: string,
+    tags: Types.ObjectId[],
+    sharable: boolean,
+    author: Types.ObjectId,
+    dateCreated: Date,
+    
+}
+const BrainSchema = new Schema<Ibrain>({
     
     title: {type: String, required: true},
     text: {type: String},
@@ -13,4 +21,4 @@ const BrainSchema = new Schema({
 
 });
 
-const BrainModel = model("UserModel", BrainSchema);
+export const BrainModel = model("UserModel", BrainSchema);

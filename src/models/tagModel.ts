@@ -1,9 +1,14 @@
 import { Schema, model } from 'mongoose'
 
-const TagSchema = new Schema({
-    tadID: {type: String, required: true, unique: true},
+export interface Itag {
+    tagID: string,
+    tag: string
+}
+
+const TagSchema = new Schema<Itag>({
+    tagID: {type: String, required: true, unique: true},
     tag: {type: String, unique: true}
     
 });
 
-const TagModel = model("UserModel", TagSchema);
+export const TagModel = model("UserModel", TagSchema);
