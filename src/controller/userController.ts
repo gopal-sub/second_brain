@@ -1,5 +1,5 @@
 import express from 'express'
-import * as userServices from '../services/userService.ts'
+import * as userServices from '../services/userService'
 
 export async function createUser(req: express.Request, res: express.Response){
     const email:string = req.body.email;
@@ -12,6 +12,11 @@ export async function createUser(req: express.Request, res: express.Response){
         return;
     }
     const user = await userServices.CreateUser(email, password);
+    res.json({
+        msg: "User created"
+    })
+    return;
+    
 
 
 
