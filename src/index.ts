@@ -2,6 +2,7 @@ import express from 'express'
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import {userRouter} from './routes/userRoutes'
+import { brainRouter } from './routes/brainRoutes';
 dotenv.config();
 
 const MONGO_URL = process.env.MONGODB_URL;
@@ -16,6 +17,8 @@ const app = express();
 
 app.use(express.json());
 app.use('/api/v1/user', userRouter);
+app.use('/api/v1/brain', brainRouter);
+
 
 
 app.listen(3000, async ()=>{

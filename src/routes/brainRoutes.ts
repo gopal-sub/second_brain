@@ -1,21 +1,15 @@
 import express from 'express'
+import * as brainController from '../controller/brainController'
+import {verifyToken} from '../middlewares/authMiddleware'
 
 
 const Router = express.Router;
-export const brainRoutes = Router();
+export const brainRouter = Router();
 
-brainRoutes.get('/brains', (req, res)=>{
-    
-});
+brainRouter.get('/brains', verifyToken, brainController.getBrains);
 
-brainRoutes.post('/brain', (req, res)=>{
+brainRouter.post('/brain', verifyToken, brainController.createBrain);
 
-});
+brainRouter.put('/brain', verifyToken, brainController.upadteBrain);
 
-brainRoutes.put('/brain', (req, res)=>{
-
-});
-
-brainRoutes.delete('/brain', (req, res)=>{
-
-});
+brainRouter.delete('/brain', verifyToken, brainController.deleteBrain);

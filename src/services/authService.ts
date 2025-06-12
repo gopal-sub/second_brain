@@ -19,6 +19,23 @@ export function createJWT(user: Iuser){
 
 }
 
+export function verifyJWT(token: string){
+    try{
+        const jwt_secret = process.env.JWT_SECRET;
+        if(!jwt_secret){
+            throw new Error("jwt secret missing")
+        }
+        const verified_user = jwt.verify(token, jwt_secret);
+        if(verified_user){
+            return true;
+        }
+
+    }catch(e){
+        return false
+    }
+    
+}
+
 export async function verifyPassword(user:Iuser, user_password: string ): Promise<boolean>{
 
     const password_valid = await bcrypt.compare(user_password, user.password);
