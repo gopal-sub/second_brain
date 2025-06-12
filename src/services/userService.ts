@@ -1,4 +1,5 @@
 import {UserModel, Iuser} from '../models/userModel'
+import {hash_password} from './authService'
 
 
 export async function findUserByEmail(email: string): Promise<Iuser | null>{
@@ -19,11 +20,11 @@ export async function CreateUser(email: string, password: string): Promise<Iuser
     
     
     try{
+        const hashed_password = await hash_password(password);
         const db_response = await UserModel.insertOne({
         email: email,
-        password: password
+        password: hashed_password
         });
-        console.log(db_response)
         return db_response;
 
     }catch(e: any){
@@ -31,3 +32,4 @@ export async function CreateUser(email: string, password: string): Promise<Iuser
     }
     
 }
+

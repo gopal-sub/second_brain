@@ -1,8 +1,8 @@
 import {model, Schema} from 'mongoose';
 
 export interface Iuser{
-    email: String,
-    password: String
+    email: string,
+    password: string
 }
 const UserSchema = new Schema<Iuser>({
     email: {type: String, unique: true, required: true},

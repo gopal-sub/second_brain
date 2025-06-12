@@ -6,4 +6,4 @@ const Router = express.Router;
 export const userRouter = Router();
 
 userRouter.post('/signup', userController.createUser);
-userRouter.post('/signin', userController.siginUser);
+userRouter.post('/signin', userController.signinUser);

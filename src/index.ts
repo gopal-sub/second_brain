@@ -5,6 +5,7 @@ import {userRouter} from './routes/userRoutes'
 dotenv.config();
 
 const MONGO_URL = process.env.MONGODB_URL;
+console.log(MONGO_URL);
 
 if(!MONGO_URL){
     throw new Error("Mongo URL could no be found")
@@ -18,7 +19,9 @@ app.use('/api/v1/user', userRouter);
 
 
 app.listen(3000, async ()=>{
+    console.log("server runnign");
     await mongoose.connect(MONGO_URL);
+    console.log("db connected")
 })
 
 
