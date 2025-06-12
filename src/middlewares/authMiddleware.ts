@@ -10,7 +10,9 @@ export function verifyToken(req: express.Request, res: express.Response, next: e
         })
         return;
     }
-    if(verifyJWT(token)){
+    const verify_user = verifyJWT(token);
+    if(verify_user){
+        req.body.user = verify_user
         next();
     }else{
         res.status(401).json({

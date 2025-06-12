@@ -10,6 +10,6 @@ brainRouter.get('/brains', verifyToken, brainController.getBrains);
 
 brainRouter.post('/brain', verifyToken, brainController.createBrain);
 
-brainRouter.put('/brain', verifyToken, brainController.upadteBrain);
+brainRouter.put('/brain', verifyToken, brainController.updateBrain);
 
 brainRouter.delete('/brain', verifyToken, brainController.deleteBrain);

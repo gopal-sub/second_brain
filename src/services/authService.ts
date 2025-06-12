@@ -27,11 +27,11 @@ export function verifyJWT(token: string){
         }
         const verified_user = jwt.verify(token, jwt_secret);
         if(verified_user){
-            return true;
+            return verified_user;
         }
 
     }catch(e){
-        return false
+        return null
     }
     
 }
