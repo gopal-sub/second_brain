@@ -97,7 +97,7 @@ export async function createBrain(req: express.Request, res: express.Response){
 
     const tagIDs_in_brain: Types.ObjectId[] = [...getTagIDs(tags_present_in_db), ...getTagIDs(new_tags_db)];
 
-    
+    //all this messy stuff create a function
     
     
 
