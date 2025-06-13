@@ -1,5 +1,4 @@
 import {UserModel, Iuser} from '../models/userModel';
-import { BrainModel } from '../models/brainModel';
 import {hash_password} from './authService';
 import mongoose from 'mongoose';
 
@@ -18,9 +17,9 @@ export async function findUserByEmail(email: string): Promise<Iuser | null>{
     
 }
 
-export async function findUserId(email:string):Promise<mongoose.Types.ObjectId | null>{
+export async function findUserId(email: string):Promise<mongoose.Types.ObjectId | null>{
     try{
-        const user = await BrainModel.findOne({
+        const user = await UserModel.findOne({
             email: email
         });
         if(!user){
