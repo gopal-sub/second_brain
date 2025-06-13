@@ -1,4 +1,4 @@
-import {model, Schema, models} from 'mongoose';
+import {model, Schema} from 'mongoose';
 
 export interface Iuser{
     email: string,

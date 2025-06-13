@@ -25,8 +25,9 @@ export function getTagIDs(tags: Itag[]): Types.ObjectId[]{
 
 export async function addTags(tags: string[]): Promise<Itag[]>{
     try{
-        const tagObjects = tags.map(t => {tag: t});
-        console.log(tagObjects)
+        const tagObjects = tags.map(t => ({tag: t}));
+
+        
         const tagsInserted = await TagModel.insertMany(tagObjects, { ordered: false });
         return tagsInserted
 

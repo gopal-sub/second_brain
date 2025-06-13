@@ -6,7 +6,7 @@ export interface Itag {
 }
 
 const TagSchema = new Schema<Itag>({
-    _id: {type: Schema.Types.ObjectId,default: () => new Types.ObjectId(), required: true, unique: true},
+    _id: {type: Schema.Types.ObjectId,default: () => new Types.ObjectId()},
     tag: {type: String, unique: true}
     
 });

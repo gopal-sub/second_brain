@@ -39,24 +39,27 @@ export async function createBrain(req: express.Request, res: express.Response){
     // one that are not there not  there -> create entry and push the _id to array
     const raw_tags: string[] = req.body.tags;
     const raw_clean_tags = cleanRawTags(raw_tags); //all tags
+
+
     const tags_present_in_db = await getTagsPresent(raw_clean_tags); //tags in db
-    if(tags_present_in_db.length !=0){
-        const tag_name = tags_present_in_db.map(tag => tag.tag);
-    }
+    //t_db = 0 -> add all the tag in db 
+    //t_db != 0 
+    
+    
+    const tag_name = tags_present_in_db.map(tag => tag.tag);
+
+    
+    
     const new_tags = raw_clean_tags.filter(tag => !tag_name.includes(tag));
+    
     const new_tags_db = await addTags(new_tags);
+    
+    
 
     const tagIDs_in_brain: Types.ObjectId[] = [...getTagIDs(tags_present_in_db), ...getTagIDs(new_tags_db)];
 
-
-
-
-
-
-
-
-
-
+    
+    
     
 
 
