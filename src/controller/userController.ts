@@ -1,6 +1,7 @@
 import express from 'express'
 import * as userServices from '../services/userService'
 import * as authServices from '../services/authService'
+import passport from '../auth/localStrategy';
 
 export async function createUser(req: express.Request, res: express.Response){
     const email:string = req.body.email;
@@ -51,5 +52,12 @@ export async function signinUser(req: express.Request, res: express.Response){
         return;
     }
     
+}
+
+export async function signinUser_passport(req: express.Request, res: express.Response, next: express.NextFunction){
+    passport.authenticate('local', {
+        successRedirect: 'http://localhost:3000/api/v1/brain/brains',
+        failureRedirect: 'login'
+    })(req, res, next)
 }
 

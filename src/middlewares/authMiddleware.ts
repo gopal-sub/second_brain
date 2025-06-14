@@ -21,3 +21,18 @@ export function verifyToken(req: express.Request, res: express.Response, next: e
 
     }
 }
+
+export function verifyCookie(req: express.Request, res: express.Response, next: express.NextFunction){
+    if(req.isAuthenticated()){
+        next();
+        return
+    }else{
+        console.log(req.session);
+        res.status(401).json({
+            msg: "invalid token provided"
+        })
+        return;
+
+    }
+
+}
