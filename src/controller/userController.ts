@@ -23,6 +23,7 @@ export async function createUser(req: express.Request, res: express.Response){
 
 
 }
+//===========================NOT USED METHOD=============================
 export async function signinUser(req: express.Request, res: express.Response){
     //find if user and password match
     //if y make token and send
@@ -54,10 +55,26 @@ export async function signinUser(req: express.Request, res: express.Response){
     
 }
 
-export async function signinUser_passport(req: express.Request, res: express.Response, next: express.NextFunction){
-    passport.authenticate('local', {
-        successRedirect: 'http://localhost:3000/api/v1/brain/brains',
-        failureRedirect: 'login'
-    })(req, res, next)
+export async function createUserSession(req: express.Request, res: express.Response, next: express.NextFunction){
+     passport.authenticate(
+    'local',
+    (err: any, user: Express.User | false, info: { message?: string } | undefined) => {
+        if (err) {
+        next(err);
+        return;
+        }
+
+        if (!user) {
+        res.status(401).json({ message: info?.message || 'Login failed' });
+        return;
+        }
+
+        req.logIn(user, (err: any) => {
+            if (err) return next(err);
+            res.status(200).json({ message: 'Logged in', user });
+            return;
+        });
+    }
+  )(req, res, next);
 }
 

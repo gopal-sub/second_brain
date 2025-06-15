@@ -7,11 +7,11 @@ import { Itag} from '../models/tagModel';
 import { tagIDsAddToBrain } from '../services/tagService';
 
 export async function getBrains(req: express.Request, res: express.Response){
-    const userEmail = req.body.user.email;
-    const userID:Types.ObjectId | null = await findUserId(userEmail);
+    // @ts-ignore
+    const userID = req.user._id;
     if(!userID){
         res.status(404).json({
-            msg:"User does not exist"
+            msg:"user id could not be found recreate session"
         });
         return;
     }

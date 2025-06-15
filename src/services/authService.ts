@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import {Iuser} from '../models/userModel'
+import express from 'express';
 
 
 
@@ -51,3 +52,7 @@ export async function hash_password(password: string){
     const hashed_password = await bcrypt.hash(password,salt_round);
     return hashed_password;
 }
+
+// export function getUserEmailFromSession(req: express.Request){
+//     userEmail = req.session.passport
+// }

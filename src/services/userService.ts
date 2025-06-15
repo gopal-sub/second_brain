@@ -17,6 +17,20 @@ export async function findUserByEmail(email: string): Promise<Iuser | null>{
     
 }
 
+export async function findUserByID(id: mongoose.Types.ObjectId): Promise<Iuser | null>{
+    try{
+        const db_response = await UserModel.findOne({
+        _id: id
+        });
+
+        return db_response;
+
+    }catch(e: any){
+        throw new Error(e.message || "Error fetching user by id")
+    }
+}
+
+
 export async function findUserId(email: string):Promise<mongoose.Types.ObjectId | null>{
     try{
         const user = await UserModel.findOne({
@@ -49,4 +63,6 @@ export async function CreateUser(email: string, password: string): Promise<Iuser
     }
     
 }
+
+
 

@@ -15,7 +15,7 @@ export function verifyToken(req: express.Request, res: express.Response, next: e
         next();
     }else{
         res.status(401).json({
-            msg: "invalid token provided"
+            msg: "invalid token provided "
         })
         return;
 
@@ -23,11 +23,18 @@ export function verifyToken(req: express.Request, res: express.Response, next: e
 }
 
 export function verifyCookie(req: express.Request, res: express.Response, next: express.NextFunction){
+    console.log(req.user);
+    console.log(req.session);
     if(req.isAuthenticated()){
         next();
         return
-    }else{
-        console.log(req.session);
+    }else if(!req.user){
+        
+        res.status(401).json({
+            msg: "no token provided"
+        })
+    }
+    else{
         res.status(401).json({
             msg: "invalid token provided"
         })

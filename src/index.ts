@@ -15,8 +15,14 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 
+
+const session_secret = process.env.SESSION_SECRET;
+if(!session_secret){
+    throw new Error("session secret is not defined");
+}
+
 app.use(session({
-    secret: "hithere",
+    secret: session_secret,
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({
