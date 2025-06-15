@@ -5,16 +5,11 @@ import { Types } from 'mongoose';
 import { Ibrain } from '../models/brainModel';
 import { Itag} from '../models/tagModel';
 import { tagIDsAddToBrain } from '../services/tagService';
+import {getUserIDFromSession} from '../services/sessionService'
 
 export async function getBrains(req: express.Request, res: express.Response){
     // @ts-ignore
-    const userID = req.user._id;
-    if(!userID){
-        res.status(404).json({
-            msg:"user id could not be found recreate session"
-        });
-        return;
-    }
+    const userID = getUserIDFromSession(req, res);
     const brains = await getBrainsAll(userID);
     res.status(200).json(brains);
     return;
@@ -34,14 +29,7 @@ export async function updateBrain(req: express.Request, res: express.Response){
     const brainID: Types.ObjectId = new Types.ObjectId(req.body.id);
     
     
-    const userEmail = req.body.user.email;
-    const userID:Types.ObjectId | null = await findUserId(userEmail);
-    if(!userID){
-        res.status(404).json({
-            msg:"User does not exist"
-        });
-        return;
-    }
+    const userID = getUserIDFromSession(req, res);
 
     const brainPresent = await getaBrain(brainID, userID);
     if(!brainPresent){
@@ -70,14 +58,7 @@ export async function updateBrain(req: express.Request, res: express.Response){
 
 }
 export async function createBrain(req: express.Request, res: express.Response){
-    const userEmail = req.body.user.email;
-    const userID:Types.ObjectId | null = await findUserId(userEmail);
-    if(!userID){
-        res.status(404).json({
-            msg:"User does not exist"
-        });
-        return;
-    }
+    const userID = getUserIDFromSession(req, res);
     
     const raw_tags: string[] = req.body.tags;
 
@@ -113,14 +94,7 @@ export async function deleteBrain(req: express.Request, res: express.Response){
     const brainID: Types.ObjectId = new Types.ObjectId(req.body.id);
     
     
-    const userEmail = req.body.user.email;
-    const userID:Types.ObjectId | null = await findUserId(userEmail);
-    if(!userID){
-        res.status(404).json({
-            msg:"User does not exist"
-        });
-        return;
-    }
+    const userID = getUserIDFromSession(req, res);
 
     const brainPresent = await getaBrain(brainID, userID);
     if(!brainPresent){
@@ -135,3 +109,4 @@ export async function deleteBrain(req: express.Request, res: express.Response){
 
 
 }
+
