@@ -40,6 +40,17 @@ app.use(passport.session());
 
 app.use('/api/v1/user', userRouter);
 app.use('/api/v1/brain', brainRouter);
+app.get('/auth/google',
+  passport.authenticate('google', { scope: ['profile', 'email'] })
+);
+
+// Callback from Google
+app.get('/auth/google/callback',
+  passport.authenticate('google', {
+    failureRedirect: '/login',
+    successRedirect: '/posts' // or wherever you want
+  })
+);
 
 
 

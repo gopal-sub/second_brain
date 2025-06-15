@@ -4,6 +4,7 @@ import * as userServices from '../services/userService';
 import * as authServices from '../services/authService';
 import { Iuser } from '../models/userModel';
 import { Types } from 'mongoose';
+import './googleStrategy';
 
 
 
