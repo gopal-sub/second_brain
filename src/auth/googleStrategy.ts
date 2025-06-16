@@ -2,6 +2,8 @@ import passport from "passport";
 import { Strategy as GoogleStrategy} from "passport-google-oauth20";
 import dotenv from 'dotenv';
 import express from 'express';
+import {findUserByEmail} from '../services/userService';
+import { CreateUser } from "../services/userService";
 dotenv.config();
 
 const googleStrategy = new GoogleStrategy({
@@ -16,16 +18,31 @@ const googleStrategy = new GoogleStrategy({
     // if all good done(null, user)
     // useremail and google email match but google account not linked
     // n -> createuser
-    const user = {
-        googleId: profile.id,
-        email: profile.emails?.[0].value,
-        name: profile.displayName
-    };
-    console.log(profile);
-    console.log("====================")
-    console.log(accessToken);
-    done(null, user);
-    return;
+    try{
+        const emailGoogle = profile.emails?.[0].value;
+        const nameGoogle = profile.displayName;
+        const googleId = profile.id;
+        const userExists = await findUserByEmail(emailGoogle);
+            
+        if(userExists){
+            //@ts-ignore
+            if(req.user && req.user.email !== emailGoogle){
+                done(null, false, {msg: "google account email does not match user account email"})
+                return;
+            }
+            //link google to existing account
+        
+        }else{
+            const userCreated = await CreateUser(emailGoogle) || undefined;
+            console.log(userCreated);
+            done(null, userCreated);
+            return;
+        }
+
+    }catch(err){
+        return done(null, false, { msg: err });
+    }
+    
 });
 
 passport.use(googleStrategy);

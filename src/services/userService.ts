@@ -1,9 +1,13 @@
 import {UserModel, Iuser} from '../models/userModel';
 import {hash_password} from './authService';
 import mongoose from 'mongoose';
+import generator from 'generate-password'
 
 
-export async function findUserByEmail(email: string): Promise<Iuser | null>{
+export async function findUserByEmail(email: string | undefined): Promise<Iuser | null>{
+    if(!email){
+        return null;
+    }
     try{
         const db_response = await UserModel.findOne({
         email: email
@@ -47,10 +51,14 @@ export async function findUserId(email: string):Promise<mongoose.Types.ObjectId 
     
 }
 
-export async function CreateUser(email: string, password: string): Promise<Iuser> {
+export async function CreateUser(email: string | undefined, password: string = generateRandomPassword()): Promise<Iuser | null> {
     
-    
+    if(email === undefined){
+        return null;
+    }
     try{
+        console.log(password);
+        
         const hashed_password = await hash_password(password);
         const db_response = await UserModel.insertOne({
         email: email,
@@ -62,6 +70,14 @@ export async function CreateUser(email: string, password: string): Promise<Iuser
         throw new Error(e.message || "Error creating the user")
     }
     
+}
+
+function generateRandomPassword(){
+    const password = generator.generate({
+        length: 10,
+        numbers: true
+    })
+    return password;
 }
 
 

@@ -6,6 +6,7 @@ import { brainRouter } from './routes/brainRoutes';
 import passport from './auth/localStrategy';
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
+import './auth/sessionPassport'
 
 
 dotenv.config();
@@ -34,6 +35,7 @@ app.use(session({
     sameSite: 'lax'
     }
 }));
+
 
 app.use(passport.initialize());
 app.use(passport.session());

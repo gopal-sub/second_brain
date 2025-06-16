@@ -29,27 +29,5 @@ const localLoginStrategy = new LocalStrategy(
 
 passport.use(localLoginStrategy);
 
-passport.serializeUser((user: any, done: (error: any, user?: any, info?: any) => void)=>{
-    done(null, user._id );
-});
-
-
-passport.deserializeUser(async (id: string, done)=>{
-    try {
-        if(!Types.ObjectId.isValid(id)){
-            return done(null, false);
-        }
-        const userID: Types.ObjectId = new Types.ObjectId(id);
-        
-        const user = await userServices.findUserByID(userID);
-
-        if (!user) {
-            return done(null, false); 
-        }
-        done(null, user);// => req.user = Iuser
-    }catch (err) {
-        done(err);
-    }
-});
 
 export default passport;

@@ -14,6 +14,12 @@ export async function createUser(req: express.Request, res: express.Response){
         return;
     }
     const user = await userServices.CreateUser(email, password);
+    if(user === null){
+        res.status(200).json({
+        msg: `There was an issue with creating the user account ` 
+    });
+    return;
+    }
     res.status(200).json({
         msg: `User created with email ${user.email}` 
     })

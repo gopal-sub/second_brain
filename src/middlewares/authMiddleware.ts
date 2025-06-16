@@ -24,6 +24,7 @@ export function verifyToken(req: express.Request, res: express.Response, next: e
 
 export function verifyCookie(req: express.Request, res: express.Response, next: express.NextFunction){
     console.log(req.user);
+    console.log("================")
     console.log(req.session);
     if(req.isAuthenticated()){
         next();
