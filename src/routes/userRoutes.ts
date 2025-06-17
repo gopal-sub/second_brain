@@ -1,15 +1,18 @@
 import express from 'express';
 import * as userController from '../controller/userController';
-import {userValidatorInput} from '../middlewares/userValidatorMiddleware';
+import {userValidatorInputCreateUser, userValidatorInputSession} from '../middlewares/userValidatorMiddleware';
 import passport from 'passport';
+import {verifyCookie} from '../middlewares/authMiddleware'
 
 
 
 const Router = express.Router;
 export const userRouter = Router();
 
-userRouter.post('/signup', userValidatorInput, userController.createUser);
-userRouter.post('/login', userValidatorInput,userController.createUserSession);
+userRouter.post('/signup', userValidatorInputCreateUser, userController.createUser);
+userRouter.post('/login', userValidatorInputSession,userController.createUserSession);
+userRouter.get('/logout',userController.destroyUserSession);
+userRouter.put('/resetPassword',verifyCookie, userController.resetPassword);
 
 userRouter.get('/auth/google',
   passport.authenticate('google', { scope: ['profile', 'email'] })

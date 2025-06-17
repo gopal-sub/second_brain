@@ -78,6 +78,18 @@ export async function CreateUser(user: Partial<Iuser>) : Promise<Iuser | null> {
     
 }
 
+
+export async function resetPassword(userID: mongoose.Types.ObjectId, newPasswordHashed:String ) {
+    try{
+        const updatedUser = await UserModel.findByIdAndUpdate(userID, {
+            password: newPasswordHashed
+        });
+        return updatedUser
+    }catch(e: any){
+        throw new Error(e.message || "Error resetting password")
+    }
+}
+
 function generateRandomPassword(){
     const password = generator.generate({
         length: 10,
@@ -85,6 +97,8 @@ function generateRandomPassword(){
     })
     return password;
 }
+
+
 
 
 

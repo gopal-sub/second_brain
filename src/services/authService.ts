@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import {Iuser} from '../models/userModel'
 import express from 'express';
+import {Types} from 'mongoose'
 
 
 
@@ -56,3 +57,4 @@ export async function hash_password(password: string){
 // export function getUserEmailFromSession(req: express.Request){
 //     userEmail = req.session.passport
 // }
+

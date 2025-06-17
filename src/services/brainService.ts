@@ -3,6 +3,9 @@ import mongoose from "mongoose";
 import { Ibrain } from "../models/brainModel";
 
 export async function getBrainsAll(userID: mongoose.Types.ObjectId): Promise<Ibrain[]>{
+    
+
+
     try{
         const brains = await BrainModel.find({author: userID}).populate('author','email').populate('tags','tag');
         return brains;

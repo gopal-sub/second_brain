@@ -24,7 +24,7 @@ passport.deserializeUser(async (id: string, done)=>{
         if (!user) {
             return done(null, false); 
         }
-        done(null, user);// => req.user = Iuser
+        done(null, user.email);// => req.user = Iuser
     }catch (err) {
         done(err);
     }
