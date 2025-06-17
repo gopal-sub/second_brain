@@ -7,8 +7,6 @@ import { Types } from 'mongoose';
 
 
 passport.serializeUser((user: any, done: (error: any, user?: any, info?: any) => void)=>{
-    console.log("hi sere");
-    console.log(user._id);
     done(null, user._id );
 
 });

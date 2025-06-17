@@ -5,7 +5,7 @@ import {findUserByEmail} from '../services/userService';
 import { CreateUser } from "../services/userService";
 import { Iuser } from "../models/userModel";
 
-//101578663714977600000
+
 const googleStrategy = new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID!,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
