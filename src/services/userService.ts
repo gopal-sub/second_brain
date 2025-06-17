@@ -51,18 +51,24 @@ export async function findUserId(email: string):Promise<mongoose.Types.ObjectId 
     
 }
 
-export async function CreateUser(email: string | undefined, password: string = generateRandomPassword()): Promise<Iuser | null> {
+export async function CreateUser(user: Partial<Iuser>) : Promise<Iuser | null> {
     
-    if(email === undefined){
+    if(user.email === undefined){
         return null;
     }
     try{
-        console.log(password);
-        
+        let {email, password, username, githubID, googleID} = user;
+        if(!password || password.length == 0){
+            password = generateRandomPassword();
+        }
         const hashed_password = await hash_password(password);
         const db_response = await UserModel.insertOne({
         email: email,
-        password: hashed_password
+        password: hashed_password,
+        username: username,
+        githubID: githubID,
+        googleID: googleID,
+        creationDate: Date.now()
         });
         return db_response;
 

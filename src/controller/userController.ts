@@ -2,10 +2,12 @@ import express from 'express'
 import * as userServices from '../services/userService'
 import * as authServices from '../services/authService'
 import passport from '../auth/localStrategy';
+import { Iuser } from '../models/userModel';
 
 export async function createUser(req: express.Request, res: express.Response){
     const email:string = req.body.email;
     const password:string = req.body.password;
+    const username:string = req.body.username;
     const user_exits = await userServices.findUserByEmail(email);
     if(user_exits){
         res.status(409).json({
@@ -13,7 +15,15 @@ export async function createUser(req: express.Request, res: express.Response){
         });
         return;
     }
-    const user = await userServices.CreateUser(email, password);
+    const userCreate: Iuser = {
+        email: email,
+        password: password,
+        username: username,
+        googleID: null,
+        githubID: null,
+        creationDate: new Date()
+    }
+    const user = await userServices.CreateUser(userCreate);
     if(user === null){
         res.status(200).json({
         msg: `There was an issue with creating the user account ` 

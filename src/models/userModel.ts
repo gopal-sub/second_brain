@@ -2,11 +2,19 @@ import {model, Schema} from 'mongoose';
 
 export interface Iuser{
     email: string,
-    password: string
+    password: string,
+    googleID: number | null,
+    username: String,
+    githubID: number | null,
+    creationDate: Date
 }
 const UserSchema = new Schema<Iuser>({
     email: {type: String, unique: true, required: true},
     password: {type: String, required: true},
+    username: {type: String, required: true},
+    googleID: {type: Number,  default: null},
+    githubID: {type: Number, default: null},
+    creationDate: {type: Date, default: new Date()}
 });
 
 

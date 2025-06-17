@@ -1,15 +1,19 @@
+import dotenv from 'dotenv'
+dotenv.config();
+
 import express from 'express'
 import mongoose from 'mongoose'
-import dotenv from 'dotenv'
 import {userRouter} from './routes/userRoutes'
 import { brainRouter } from './routes/brainRoutes';
 import passport from './auth/localStrategy';
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
-import './auth/sessionPassport'
+import './auth/sessionPassport';
+import './auth/githubStrategy';
+import './auth/googleStrategy';
 
 
-dotenv.config();
+
 
 
 
@@ -42,17 +46,11 @@ app.use(passport.session());
 
 app.use('/api/v1/user', userRouter);
 app.use('/api/v1/brain', brainRouter);
-app.get('/auth/google',
-  passport.authenticate('google', { scope: ['profile', 'email'] })
-);
 
-// Callback from Google
-app.get('/auth/google/callback',
-  passport.authenticate('google', {
-    failureRedirect: '/login',
-    successRedirect: '/posts' // or wherever you want
-  })
-);
+
+
+
+
 
 
 
